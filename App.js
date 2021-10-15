@@ -99,8 +99,8 @@ const styles = StyleSheet.create({
     loginContainer: {
         backgroundColor: 'white',
         paddingHorizontal: 20,
-        paddingVertical: 10,
-        borderRadius: 20,
+        paddingVertical: 15,
+        borderRadius: 30,
         width: 300,
     },
     inputFieldContainer: {
