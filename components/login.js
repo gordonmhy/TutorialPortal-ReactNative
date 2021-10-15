@@ -9,6 +9,7 @@ import {
     Linking, Alert
 } from 'react-native';
 import {loginStyles} from "../styles/loginStyles";
+import "react-native-gesture-handler";
 
 export default function Login() {
 
