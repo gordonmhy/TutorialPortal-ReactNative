@@ -11,7 +11,7 @@ import {
 import {loginStyles} from "../styles/loginStyles";
 import "react-native-gesture-handler";
 
-export default function Login() {
+export default function Login({navigation}) {
 
     // Stores input credentials ready to be submitted
     const [credentials, setCredentials] = useState({
@@ -32,6 +32,29 @@ export default function Login() {
                     }
                 }
             ])
+    }
+
+    const authenticate = () => {
+        const base64 = require('base-64');
+        const headers = new Headers();
+        headers.append("Authorization", "Basic " + base64.encode(`${credentials.username}:${credentials.password}`));
+        fetch("https://www.gordonmhy.com/tutorial-api/students/", {
+            headers: headers
+        })
+            .then((response) => response.json())
+            .then((json) => {
+                console.log(json);
+                let wrongCredentials = "Invalid username/password.";
+                if (json.detail === wrongCredentials) {
+                    Alert.alert(wrongCredentials);
+                } else {
+                    navigation.navigate("Dashboard");
+                }
+            })
+            .catch((error) => {
+                Alert.alert("An error occurred.");
+                console.log(error);
+            })
     }
 
     return (
@@ -66,7 +89,10 @@ export default function Login() {
                         <Text style={loginStyles.buttonText}>Register</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={loginStyles.buttons}>
-                        <Text style={loginStyles.buttonText}>Login</Text>
+                        <Text style={loginStyles.buttonText}
+                              onPress={() => {
+                                  authenticate();
+                              }}>Login</Text>
                     </TouchableOpacity>
                 </View>
             </KeyboardAvoidingView>
